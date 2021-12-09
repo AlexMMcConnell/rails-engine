@@ -10,7 +10,9 @@ Rails.application.routes.draw do
       end
 
       get "/items/find_all", to: "items#find"
-      resources :items
+      resources :items do
+        get "/merchant", to: "item_merchants#index"
+      end
     end
   end
 end
