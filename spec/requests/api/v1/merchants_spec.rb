@@ -23,6 +23,7 @@ describe "Merchants API" do
     get "/api/v1/merchants/#{id}"
 
     merchant = JSON.parse(response.body, symbolize_names: true)[:data]
+    
     expect(response).to be_successful
 
     expect(merchant).to have_key(:id)
@@ -33,12 +34,12 @@ describe "Merchants API" do
   end
 
   it "can get all items that belong to a merchant" do
-    merchant = create(:merchant)
+    merchant1 = create(:merchant)
     merchant2 = create(:merchant)
-    item_list = create_list(:item, 3, merchant: merchant)
+    item_list_1 = create_list(:item, 3, merchant: merchant1)
     item_list_2 = create_list(:item, 1, merchant: merchant2)
 
-    get "/api/v1/merchants/#{merchant.id}/items"
+    get "/api/v1/merchants/#{merchant1.id}/items"
 
     items = JSON.parse(response.body, symbolize_names: true)[:data]
 
@@ -57,7 +58,7 @@ describe "Merchants API" do
       expect(item[:attributes][:unit_price]).to be_a(Float)
 
       expect(item[:attributes]).to have_key(:merchant_id)
-      expect(item[:attributes][:merchant_id]).to eq(merchant.id)
+      expect(item[:attributes][:merchant_id]).to eq(merchant1.id)
     end
   end
 
