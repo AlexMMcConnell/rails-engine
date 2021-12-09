@@ -121,14 +121,26 @@ describe "Items API" do
     expect(result_items.last[:id]).to eq(item2.id.to_s)
   end
 
-  xit 'doesnt search for items if both a name and min/max price query are present' do
+  it 'doesnt search for items if both a name and min/max price query are present' do
     item1 = create(:item, name: "Product")
     item2 = create(:item, name: "Duct Tape")
 
     get "/api/v1/items/find_all?name=uct&min_price=2"
 
-    result_items = JSON.parse(response.body, symbolize_names: true)[:data]
-
     expect(response).to_not be_successful
+
+    expect(response.status).to eq(400)
+  end
+
+  it 'can get the merchant that an item belongs to' do
+    merchant = create(:merchant)
+    item = create(:item, merchant: merchant)
+
+    get "/api/v1/items/#{item.id}/merchant"
+
+    result_merchant = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(result_merchant[:id]).to eq(merchant.id.to_s)
+    expect(result_merchant[:attributes][:name]).to eq(merchant.name)
   end
 end
