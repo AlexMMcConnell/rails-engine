@@ -1,6 +1,6 @@
 class Api::V1::ItemsController < ApplicationController
   def index
-    render json: ItemSerializer.index
+    render json: ItemSerializer.index(Item.all)
   end
 
   def show
@@ -37,7 +37,11 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def find
-    render json: ItemSerializer.find_all(params)
+    if params[:name].present? && (params[:min_price].present? || params[:max_price].present?)
+      render status: 400
+    else
+      render json: ItemSerializer.find_all(params)
+    end
   end
 
   private
