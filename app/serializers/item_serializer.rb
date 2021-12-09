@@ -1,7 +1,7 @@
 class ItemSerializer
-  def self.index
+  def self.index(items)
     {"data":
-      Item.all.map do |item|
+      items.map do |item|
         {"id": item[:id].to_s,
         "type": "item",
         "attributes": {
@@ -36,9 +36,7 @@ class ItemSerializer
       params[:max_price] = Item.maximum("unit_price")
     end
 
-    if params[:name].present? && (params[:min_price].present? || params[:min_price].present?)
-      # throw error
-    elsif params[:name].present?
+    if params[:name].present?
       items = Item.where("lower(name) like ?", "%#{params[:name].downcase}%")
       .order(:name)
     else params[:min_price].present? || params[:max_price].present?
@@ -47,22 +45,18 @@ class ItemSerializer
                   .order(:name)
     end
 
-    if items.nil?
-      # return error
-    else
-      {"data":
-        items.map do |item|
-          {"id": item[:id].to_s,
-          "type": "item",
-          "attributes": {
-            "name": item[:name],
-            "description": item[:description],
-            "unit_price": item[:unit_price],
-            "merchant_id": item[:merchant_id]
-            }
+    {"data":
+      items.map do |item|
+        {"id": item[:id].to_s,
+        "type": "item",
+        "attributes": {
+          "name": item[:name],
+          "description": item[:description],
+          "unit_price": item[:unit_price],
+          "merchant_id": item[:merchant_id]
           }
-        end
-      }
-    end
+        }
+      end
+    }
   end
 end

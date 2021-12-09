@@ -1,7 +1,5 @@
 class MerchantSerializer
-  def self.index
-    merchants = Merchant.all
-
+  def self.new(merchants)
     {"data":
       merchants.map do |merchant|
         {"id": merchant[:id].to_s,
