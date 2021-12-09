@@ -3,6 +3,10 @@ class Api::V1::ItemsController < ApplicationController
     render json: ItemSerializer.index
   end
 
+  def show
+    render json: ItemSerializer.show(params[:id])
+  end
+
   def find
     render json: ItemSerializer.find_all(params)
   end

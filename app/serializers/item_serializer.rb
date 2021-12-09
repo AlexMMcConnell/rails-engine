@@ -1,5 +1,35 @@
 class ItemSerializer
+  def self.index
+    {"data":
+      Item.all.map do |item|
+        {"id": item[:id].to_s,
+        "type": "item",
+        "attributes": {
+          "name": item[:name],
+          "description": item[:description],
+          "unit_price": item[:unit_price],
+          "merchant_id": item[:merchant_id]
+          }
+        }
+      end
+    }
+  end
 
+  def self.show(item_id)
+    item = Item.find(item_id)
+    {
+    "data":
+      {"id": item[:id].to_s,
+      "type": "item",
+      "attributes": {
+        "name": item[:name],
+        "description": item[:description],
+        "unit_price": item[:unit_price],
+        "merchant_id": item[:merchant_id]
+        }
+      }
+    }
+  end
 
   def self.find_all(params)
     if params[:max_price].nil?
