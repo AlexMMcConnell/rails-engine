@@ -65,7 +65,7 @@ describe "Items API" do
 
   it 'can update an item' do
     item = create(:item)
-    item_params = { name: "Apple" }
+    item_params = { name: "Apple"}
     headers = {"CONTENT_TYPE" => "application/json"}
 
     expect(Item.last.name).to eq(item.name)
@@ -76,6 +76,17 @@ describe "Items API" do
 
     expect(Item.last.name).to_not eq(item.name)
     expect(Item.last.name).to eq("Apple")
+  end
+
+  it 'doesnt update an item if params are invalid' do
+    item = create(:item)
+    item_params = { merchant_id: 0 }
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    patch "/api/v1/items/#{item.id}", headers: headers, params: JSON.generate({item: item_params})
+
+    expect(response).to_not be_successful
+    expect(response.status).to eq(400)
   end
 
   it 'can delete an item' do
