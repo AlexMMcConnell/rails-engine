@@ -4,17 +4,10 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def show
-    render json: MerchantSerializer.show(params[:id].to_i)
+    render json: MerchantSerializer.new(Merchant.find(params[:id]))
   end
 
   def find
-    render json: MerchantSerializer.find(params[:name])
+    render json: MerchantSerializer.new(Merchant.find_by_name(params[:name]))
   end
-
-  private
-
-  def merch_params
-    params.require(:merchant).permit(:name)
-  end
-
 end
