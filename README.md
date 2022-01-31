@@ -1,6 +1,6 @@
 # Rails Engine
 
-[Rails Engine](https://backend.turing.edu/module3/projects/rails_engine/) is a Ruby on Rails application designed by [Turing School of Software and Design](turing.io). This is the backend portion, which is designed with one primary purpose in mind; creating an API to communicate with a separate frontend application.
+[Rails Engine](https://backend.turing.edu/module3/projects/rails_engine/) is a Ruby on Rails application designed by [Turing School of Software and Design](turing.io). This is the backend portion, which is designed with one primary purpose in mind; creating an API to communicate with a separate frontend application. The frontend application can be located [here](https://github.com/AlexMMcConnell/rails_engine_fe).
 
 ## Versions
 
